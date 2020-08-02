@@ -12,12 +12,30 @@ namespace Treda_Solution_Api.git.Controllers
     [ApiController]
     public class ProductoController : ControllerBase
     {
+        ApplicationDbContext db;
+        public IActionResult GetAllStudents()
+        {
+            IList<Producto> productos = null;
+
+            using (db = new ApplicationDbContext())
+            {
+                productos = db.Producto.ToList<Producto>();
+            }
+
+            if (productos.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(productos);
+        }
+
         [HttpPost()]
         public IActionResult AgregarTienda(Models.Request.ProductoRequest model)
         {
             try
             {
-                using (ApplicationDbContext db = new ApplicationDbContext())
+                using (db = new ApplicationDbContext())
                 {
                     var oProducto = new Producto();
                     oProducto.Nombre = model.Nombre;
