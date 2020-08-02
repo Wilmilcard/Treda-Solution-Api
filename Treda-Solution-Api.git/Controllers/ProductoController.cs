@@ -13,21 +13,29 @@ namespace Treda_Solution_Api.git.Controllers
     public class ProductoController : ControllerBase
     {
         ApplicationDbContext db;
-        public IActionResult GetAllStudents()
+        public IActionResult Get()
         {
             IList<Producto> productos = null;
 
-            using (db = new ApplicationDbContext())
+            try
             {
-                productos = db.Producto.ToList<Producto>();
-            }
+                using (db = new ApplicationDbContext())
+                {
+                    productos = db.Producto.ToList<Producto>();
+                }
 
-            if (productos.Count == 0)
+                if (productos.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(productos);
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                return BadRequest(ex);
             }
-
-            return Ok(productos);
+            
         }
 
         [HttpPost()]

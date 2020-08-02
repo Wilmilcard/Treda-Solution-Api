@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +13,30 @@ namespace Treda_Solution_Api.git.Controllers
     [ApiController]
     public class TiendaController : ControllerBase
     {
+        ApplicationDbContext db;
         public IActionResult Get()
         {
-            Tienda oTienda = new Tienda();
-            return Ok("okey");
+            IList<Tienda> tienda = null;
+
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    tienda = db.Tienda.ToList<Tienda>();
+                }
+
+                if (tienda.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(tienda);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
         }
 
         [HttpPost()]
