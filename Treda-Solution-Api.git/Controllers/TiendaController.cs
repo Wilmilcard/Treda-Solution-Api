@@ -30,6 +30,7 @@ namespace Treda_Solution_Api.git.Controllers
                     return NotFound();
                 }
 
+
                 return Ok(tienda);
             }
             catch (Exception ex)
