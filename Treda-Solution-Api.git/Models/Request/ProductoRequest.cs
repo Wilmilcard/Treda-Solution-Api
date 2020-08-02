@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Treda_Solution_Api.git.Models
+namespace Treda_Solution_Api.git.Models.Request
 {
-    public class Producto
+    public class ProductoRequest
     {
         public string Nombre { get; set; }
         [Key]
