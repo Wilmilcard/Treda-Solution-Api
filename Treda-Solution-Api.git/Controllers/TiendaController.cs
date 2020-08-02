@@ -15,7 +15,31 @@ namespace Treda_Solution_Api.git.Controllers
         public IActionResult Get()
         {
             Tienda oTienda = new Tienda();
-            return Ok("okey prr");
+            return Ok("okey");
+        }
+
+        [HttpPost()]
+        public IActionResult AgregarTienda(Models.Request.TiendaRequest model)
+        {
+            try
+            {
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    var oTienda = new Tienda();
+                    oTienda.Id = model.Id;
+                    oTienda.Nombre = model.Nombre;
+                    oTienda.FechaApertura = model.FechaApertura;
+                    db.Tienda.Add(oTienda);
+                    db.SaveChanges();
+                }
+
+                return Ok("Cargado");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+            
         }
     }
 }
